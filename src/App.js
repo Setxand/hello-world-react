@@ -1,26 +1,75 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Person from "./Person/Person"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends Component {
+	state = {
+		persons: [
+			{name: "Artem", game: "tennis"},
+			{name: "Bohdan", game: "basketball"},
+			{name: "Riman", game: "football"}
+		],
+
+		otherState: "some other value"
+	};
+
+	switchNameHandler = newName => {
+		this.setState({
+			persons: [
+				{name: newName, game: "tennis"},
+				{name: "Bohdan", game: "basketball"},
+				{name: "Riman", game: "tessin too"}
+			]
+		})
+	};
+
+	changeStateHandler = (event) => {
+		this.setState({
+			persons: [
+				{name: event.target.value, game: "tennis"},
+				{name: "Bohdan", game: "basketball"},
+				{name: "Riman", game: "tessin too"}
+			]
+		});
+	};
+
+	render() {
+		return (<div className={"App"}>
+				<p>Have a nice time</p>
+				<button onClick={() => this.switchNameHandler("ArtemArrow")}>Switch name</button>
+
+				<Person
+					name={this.state.persons[0].name}
+					game={this.state.persons[0].game}/>
+				<Person
+					name={this.state.persons[1].name}
+					game={this.state.persons[1].game}
+					click={this.switchNameHandler.bind(this, "ArtemPar")}/>
+				<Person
+					name={this.state.persons[2].name}
+					game={this.state.persons[2].game}
+					change={this.changeStateHandler}/>
+			</div>
+		)
+	};
+
+};
 
 export default App;
+// state = {
+// 	persons: [
+// 		{ name : "Artem", game : "tennis" },
+// 		{ name : "Bohdan", game : "basketball" },
+// 		{ name : "Riman", game : "football" }
+// 	]
+// };
+//
+// switchNameHandler = () => {
+// 	this.setState({
+// 		persons : [
+// 			{ name : "Artemius", game : "tennis" },
+// 			{ name : "Bohdan", game : "basketball" },
+// 			{ name : "Riman", game : "tessin too" }
+// 		]
+// 	})
+// };
