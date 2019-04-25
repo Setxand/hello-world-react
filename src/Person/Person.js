@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Radium from "radium"
 const person = (props) => {
 	return (<div className={"Person"}>
 
@@ -10,10 +10,11 @@ const person = (props) => {
 
 			<p>{props.children}</p>
 			<input name={"name"} onChange={props.change}/>
+			<button onClick={props.clickDelete}>Delete person</button>
 
 		</div>
-	)
+	);
 };
 
 
-export default person;
+export default Radium(person);
