@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import './App.css';
 import Person from "./Person/Person"
-import Radium from "radium"
 class App extends Component {
 
 	state = {
@@ -33,11 +32,7 @@ class App extends Component {
 			backgroundColor: "white",
 			font: "inherit",
 			padding: "8px",
-			border: "2px solid gray",
-			":hover": {
-				backgroundColor: "lightgreen",
-				color: "black"
-			}
+			border: "2px solid gray"
 		};
 
 		const classes = [];
@@ -64,9 +59,7 @@ class App extends Component {
 	checkPersonShow(style) {
 		if (this.state.showPersons) {
 			style.backgroundColor = "red";
-			style["hover"] = {
-				color: "solomon"
-			}
+
 			return this.state.persons.map((p, index) => {
 				return (<Person
 					name={p.name}
@@ -100,21 +93,4 @@ class App extends Component {
 	}
 };
 
-export default Radium(App);
-// state = {
-// 	persons: [
-// 		{ name : "Artem", game : "tennis" },
-// 		{ name : "Bohdan", game : "basketball" },
-// 		{ name : "Riman", game : "football" }
-// 	]
-// };
-//
-// switchNameHandler = () => {
-// 	this.setState({
-// 		persons : [
-// 			{ name : "Artemius", game : "tennis" },
-// 			{ name : "Bohdan", game : "basketball" },
-// 			{ name : "Riman", game : "tessin too" }
-// 		]
-// 	})
-// };
+export default App;
