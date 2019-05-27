@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
 import './App.css';
-import Person from "./Person/Person"
+import Persons from "../components/Persons/Persons"
+import Cockpit from "../components/Cockpit/Cockpit"
+
 class App extends Component {
+
+	constructor(props) {
+		super(props);
+
+	}
 
 	state = {
 		persons: [
@@ -10,7 +17,8 @@ class App extends Component {
 			{id: "dassasdasd", name: "Riman", game: "football"}
 		],
 		otherState: "some other value",
-		showPersons: false
+		showCockpit: true,
+		showPersons: false,
 	};
 
 	deletePersonHandler = (index) => {
@@ -35,42 +43,36 @@ class App extends Component {
 			border: "2px solid gray"
 		};
 
-		const classes = [];
-		if (this.state.persons.length <= 2) {
-			classes.push("red");
-		}
-
-		if (this.state.persons.length <= 1) {
-			classes.push("bold");
-		}
-
 
 		return (<div className={"App"}>
-				<p className={classes.join(" ")}>Have a nice time</p>
-				<button onClick={this.togglePersonHandler}
-						style={style}>
-					Toggle person
+
+				{this.state.showCockpit ?
+					<Cockpit
+						title={this.props.title}
+						persons={this.state.persons}
+						togglePerson={this.togglePersonHandler}
+						style={style}
+						showCockpit={this.state.showCockpit}
+					/> : null}
+				{this.checkPersonShow()}
+
+				<button onClick={() => {
+					this.setState({showCockpit: false})
+				}}>Remove
 				</button>
-				{this.checkPersonShow(style)}
 			</div>
 		);
 	};
 
-	checkPersonShow(style) {
+	checkPersonShow = () => {
 		if (this.state.showPersons) {
-			style.backgroundColor = "red";
 
-			return this.state.persons.map((p, index) => {
-				return (<Person
-					name={p.name}
-					game={p.game}
-					key={p.id}
-					clickDelete={() => this.deletePersonHandler(index)}
-					change={(event) => this.eventHandler(event, p.id)}/>)
-			})
+			return <Persons persons={this.state.persons}
+							delete={(id) => this.deletePersonHandler(id)}
+							change={(event, id) => this.eventHandler(event, id)}
+			/>
 		}
 		return null;
-
 	}
 
 	undoDeletePersonHandler(index) {
@@ -82,7 +84,7 @@ class App extends Component {
 		});
 	}
 
-	eventHandler(event, id) {
+	eventHandler = (event, id) => {
 		const persons = this.state.persons;
 		const personIndex = this.state.persons.findIndex(p => {
 			return p.id === id;
